@@ -1,5 +1,14 @@
 import React, { useRef, useState } from 'react';
-import { StyleSheet, View, Text, SafeAreaView, Platform, TouchableOpacity} from 'react-native';
+import { StyleSheet, View, Text, SafeAreaView, Platform, TouchableOpacity, Dimensions} from 'react-native';
+
+import {
+    LineChart,
+    BarChart,
+    PieChart,
+    ProgressChart,
+    ContributionGraph,
+    StackedBarChart
+  } from "react-native-chart-kit";
 
 import colors from '../config/colors';
 
@@ -23,6 +32,42 @@ function renderOptions() {
             <TimeOptionsBtn option={'2'} value='Last Week'/>                
             <TimeOptionsBtn option={'3'} value='Last Month'/>                
             <TimeOptionsBtn option={'4'} value='Last Year'/> 
+        </View>
+    )
+}
+
+function renderLinearChart() {
+    const chartConfig = {
+        backgroundGradientFrom: "#1E2923",
+        backgroundGradientFromOpacity: 0,
+        backgroundGradientTo: "#08130D",
+        backgroundGradientToOpacity: 0,
+        color: (opacity = 1) => "#8bc34a",
+        strokeWidth: 2, // optional, default 3
+        barPercentage: 0.5,
+        useShadowColorFromDataset: false // optional
+    };
+    const screenWidth = Dimensions.get("window").width;
+    const data = {
+        labels: ["00", "02", "04", "06", "08", "10", "12", "14", "16", "18", "20", "22"],
+        datasets: [
+          {
+            data: [2,2,2,2,3,3,3,4,4,3,2,2],
+            color: (opacity = 1) => "#4d4d4d", // optional
+            strokeWidth: 2 // optional
+          }
+        ],
+        //legend: ["Rainy Days"] // optional
+    };
+    return(
+        <View style={{alignItems: 'center', justifyContent: 'center'}}>
+            <LineChart
+                data={data}
+                width={screenWidth}
+                height={180}
+                chartConfig={chartConfig}
+                bezier
+            />
         </View>
     )
 }
@@ -69,14 +114,13 @@ function StatisticsScreen(props) {
             <View style={styles.stroke}/>
             <Text style={styles.subtitle}> Location-based data recorded over time</Text>
             {renderOptions()}
-            <View style={{justifyContent: "center", alignItems: "center",}} >
-            {renderChart()}</View> 
-            <Text style={styles.subtitle}> Pollutants to which you have been most exposed</Text>
-            <View style={styles.containerBtn}>
-                <View style={styles.CircleShape} />
-                <View style={styles.CircleShape} />
-                <View style={styles.CircleShape} />
+            {/*Com posar marges*/}
+            <View style={{justifyContent: "center", alignItems: "center", marginTop: 20, marginBottom: 10}} >
+                <Text style={styles.subtitle}> POLLUTION EVOLUTION</Text>
             </View>
+            <View style={{justifyContent: "center", alignItems: "center",}} >
+                {renderLinearChart()}
+            </View> 
     </SafeAreaView>        
     );      
 }

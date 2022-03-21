@@ -66,6 +66,7 @@ npm install react-native-datepicker --save
 npm install --save react-native-ratings
 npm install victory-native --save
 npm install react-native-svg --save
+npm i react-native-chart-kit
 #react-native link react-native-svg
 npm install @react-navigation/native @react-navigation/native-stack
 expo install react-native-screens react-native-safe-area-context
